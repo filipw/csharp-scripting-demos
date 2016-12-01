@@ -19,6 +19,10 @@ namespace ScriptingDemos
                 Console.Write("Please provide an option: ");
                 var opt = Console.ReadLine();
 
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+
                 switch (int.Parse(opt))
                 {
                     case 1:
@@ -30,13 +34,16 @@ namespace ScriptingDemos
                     case 3:
                         RunRepl();
                         break;
+                    case 4:
+                        RunScriptConfig();
+                        break;
                     default:
                         Console.WriteLine("Invalid option.");
                         break;
                 }
 
                 Console.WriteLine();
-                Console.WriteLine(" ******************************* ");
+                Console.WriteLine();
                 Console.WriteLine();
             }
         }
@@ -74,6 +81,23 @@ namespace ScriptingDemos
             var result = CSharpScript.EvaluateAsync<int>(code, null, new ScriptHost { Number = 5 }).Result;
             //result is now 25
             Console.WriteLine(result);
+        }
+
+        private static void RunScriptConfig()
+        {
+            var scriptConfig = new ScriptConfig(GetScriptTestFile("config1.csx")).Create<AppConfiguration>().Result;
+            Console.WriteLine("Number: {0}", scriptConfig.Number);
+            Console.WriteLine("Text: {0}", scriptConfig.Text);
+            Console.WriteLine("======================");
+
+            var scriptConfig2 = new ScriptConfig(GetScriptTestFile("config2.csx")).
+                WithNamespaces(typeof(DataTarget).Namespace).
+                Create<MyAppConfig>().Result;
+
+            Console.WriteLine("DataTarget: {0}", scriptConfig2.Target);
+            Console.WriteLine("AppUrl: {0}", scriptConfig2.AppUrl);
+            Console.WriteLine("CacheTime: {0}", scriptConfig2.CacheTime);
+            Console.WriteLine("======================");
         }
 
         private static string GetScriptTestFile(string filename)
