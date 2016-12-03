@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Strathweb.ScriptingDemos</id>
+    <version>$version$</version>
+    <title>Strathweb.ScriptingDemos</title>
+    <authors>filipw</authors>
+    <description>Demos for Dotnext</description>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2016</copyright>
+    <tags>csharp scripting roslyn</tags>
+  </metadata>
+</package>
