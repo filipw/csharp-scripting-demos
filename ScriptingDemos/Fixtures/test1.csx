@@ -1,5 +1,8 @@
-﻿int Add(int x, int y)
+﻿using System;
+
+int Add(int x, int y)
 {
     return x + y;
 }
-Add(1, 4)
+
+Console.WriteLine(Add(1, 4));

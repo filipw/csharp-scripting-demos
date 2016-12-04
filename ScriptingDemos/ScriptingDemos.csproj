@@ -150,10 +150,7 @@
     <Content Include="Fixtures\test2.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fixtures\config1.csx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fixtures\config2.csx">
+    <Content Include="Fixtures\config.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

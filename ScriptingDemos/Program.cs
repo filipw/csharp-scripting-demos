@@ -54,10 +54,10 @@ namespace ScriptingDemos
             var code = File.ReadAllText(GetScriptTestFile("test1.csx"));
 
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
-            var result = CSharpScript.EvaluateAsync<int>(code).Result;
-
+            var scriptState = CSharpScript.RunAsync(code, ScriptOptions.Default.AddImports("System")).Result;
             //result is now 5
-            Console.WriteLine(result);
+
+            Console.Write(scriptState.ReturnValue);
         }
 
         private static void RunRepl()
@@ -85,19 +85,12 @@ namespace ScriptingDemos
 
         private static void RunScriptConfig()
         {
-            var scriptConfig = new ScriptConfig(GetScriptTestFile("config1.csx")).Create<AppConfiguration>().Result;
-            Console.WriteLine("Number: {0}", scriptConfig.Number);
-            Console.WriteLine("Text: {0}", scriptConfig.Text);
-            Console.WriteLine("======================");
-
-            var scriptConfig2 = new ScriptConfig(GetScriptTestFile("config2.csx")).
-                WithNamespaces(typeof(DataTarget).Namespace).
+            var scriptConfig = new ScriptConfig(GetScriptTestFile("config.csx")).
                 Create<MyAppConfig>().Result;
 
-            Console.WriteLine("DataTarget: {0}", scriptConfig2.Target);
-            Console.WriteLine("AppUrl: {0}", scriptConfig2.AppUrl);
-            Console.WriteLine("CacheTime: {0}", scriptConfig2.CacheTime);
-            Console.WriteLine("======================");
+            Console.WriteLine($"DataTarget: {scriptConfig.Target}");
+            Console.WriteLine($"AppUrl: {scriptConfig.AppUrl}");
+            Console.WriteLine($"CacheTime: {scriptConfig.CacheTime}");
         }
 
         private static string GetScriptTestFile(string filename)

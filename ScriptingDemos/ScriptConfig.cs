@@ -11,33 +11,10 @@ namespace ScriptingDemos
 {
     public class ScriptConfig
     {
-        private string _rootPath = AppDomain.CurrentDomain.BaseDirectory;
-
-        private IEnumerable<Assembly> _assemblies = new[] { typeof(object).Assembly, typeof(Enumerable).Assembly };
-        private IEnumerable<string> _namespaces = new[] { "System", "System.IO", "System.Linq", "System.Collections.Generic" };
         private readonly string _scriptName;
-
         public ScriptConfig(string scriptName)
         {
             _scriptName = scriptName;
-        }
-
-        public ScriptConfig WithRootPath(string rootPath)
-        {
-            _rootPath = rootPath;
-            return this;
-        }
-
-        public ScriptConfig WithReferences(params Assembly[] assemblies)
-        {
-            _assemblies = assemblies.Union(_assemblies);
-            return this;
-        }
-
-        public ScriptConfig WithNamespaces(params string[] namespaces)
-        {
-            _namespaces = namespaces.Union(_namespaces);
-            return this;
         }
 
         public Task<TConfig> Create<TConfig>() where TConfig : new()
@@ -47,12 +24,12 @@ namespace ScriptingDemos
 
         public async Task<TConfig> Create<TConfig>(TConfig config)
         {
-            var code = File.ReadAllText(Path.Combine(_rootPath, _scriptName));
-            var opts = ScriptOptions.Default.AddImports(_namespaces).AddReferences(_assemblies).AddReferences(typeof(TConfig).Assembly);
+            var code = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _scriptName));
+            var opts = ScriptOptions.Default.
+                AddImports("System", "System.IO", "System.Linq", "System.Collections.Generic", typeof(TConfig).Namespace).
+                AddReferences(typeof(object).Assembly, typeof(Enumerable).Assembly, typeof(TConfig).Assembly);
 
-            var script = CSharpScript.Create(code, opts, typeof(TConfig));
-            var result = await script.RunAsync(config);
-
+            var script = await CSharpScript.RunAsync(code, opts, typeof(TConfig));
             return config;
         }
     }
