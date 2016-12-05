@@ -15,7 +15,7 @@ Console.WriteLine("Processing users!");
 var rawJson = File.ReadAllText("users.json");
 var users = JsonConvert.DeserializeObject<User[]>(rawJson);
 
-var filteredUsers = users.Where(x => x.Name.ToLowerInvariant().StartsWith(startWith));
+var filteredUsers = users.Where(x => x.Name.StartsWith(startWith));
 
 foreach(var user in filteredUsers) {
   Console.WriteLine($"Found: {user.Name} - {user.Email}.");

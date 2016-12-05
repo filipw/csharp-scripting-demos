@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "Newtonsoft.Json": "9.0.1"
+    "Newtonsoft.Json": "9.0.1",
+    "NETStandard.Library": "1.6.1"
   },
   "buildOptions": {
     "compile": "**/*.csx"
