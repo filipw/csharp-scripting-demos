@@ -3,22 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting.Hosting;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.DotNet.InternalAbstractions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
-using Microsoft.Extensions.Primitives;
 
 namespace ScriptingInWebAppDemo.Controllers
 {
     [Route("api/[controller]")]
     public class ScriptController : Controller
     {
-        private ScriptOptions _opts;
+        private readonly ScriptOptions _opts;
 
         public ScriptController()
         {
@@ -48,29 +45,25 @@ namespace ScriptingInWebAppDemo.Controllers
             var output = new BufferTextWriter();
             var globals = new WebAppGlobals(output, CSharpObjectFormatter.Instance);
 
-            if (script.Namespaces != null)
-            {
-                _opts = _opts.AddImports(script.Namespaces);
-            }
-
-            if (script.Assemblies != null)
-            {
-                _opts = _opts.AddReferences(script.Assemblies);
-            }
-
             var compiledScript = CSharpScript.Create(script.Code, _opts, typeof(WebAppGlobals));
             var diagnostics = compiledScript.GetCompilation().GetDiagnostics();
 
             if (diagnostics.Any())
             {
-                return Ok(new {error = string.Join(Environment.NewLine, diagnostics.Select(x => x.GetMessage()))});
+                return Ok(new
+                {
+                    error = string.Join(Environment.NewLine, diagnostics.Select(x => x.GetMessage()))
+                });
             }
 
             var result = await compiledScript.RunAsync(globals);
 
             if (result.Exception != null)
             {
-                return Ok(new {error = result.Exception.Message});
+                return Ok(new
+                {
+                    error = result.Exception.Message
+                });
             }
 
             if (!string.IsNullOrWhiteSpace(output.Buffer))

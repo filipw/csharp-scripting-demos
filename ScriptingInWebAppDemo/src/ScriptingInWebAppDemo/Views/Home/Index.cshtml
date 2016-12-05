@@ -6,14 +6,6 @@
         </div>
         <form role="form">
             <div class="form-group">
-                <label>Assemblies</label>
-                <input type="text" class="form-control" placeholder="Assemblies" data-bind="value: assemblies">
-            </div>
-            <div class="form-group">
-                <label>Namespaces</label>
-                <input type="text" class="form-control" placeholder="Namespaces" data-bind="value: namespaces">
-            </div>
-            <div class="form-group">
                 <label>Code</label>
                 <textarea class="form-control" rows="6" data-bind="value: code"></textarea>
             </div>
@@ -24,13 +16,10 @@
 
 @section scripts {
     <script type="text/javascript">
-         ScriptCs = function() {
+         var Scripting = function() {
              var self = this;
 
              self.code = ko.observable();
-             self.namespaces = ko.observable("");
-             self.assemblies = ko.observable("");
-             self.args = ko.observable("");
              self.result = ko.observable("");
              self.error = ko.observable(false);
 
@@ -41,10 +30,7 @@
                      type: "POST",
                      contentType: "application/json",
                      data: JSON.stringify({
-                         Code: self.code(),
-                         Args: self.args().length > 0 ? self.args().split(',') : null,
-                         Assemblies: self.assemblies().length > 0 ? self.assemblies().split(',') : null,
-                         Namespaces: self.namespaces().length > 0 ? self.namespaces().split(',') : null
+                         Code: self.code()
                      })
                  }).success(function(data) {
                      self.error(false);
@@ -64,7 +50,7 @@
 
          var vm;
          $(function() {
-             vm = new ScriptCs();
+             vm = new Scripting();
              ko.applyBindings(vm);
          });
     </script>
