@@ -48,7 +48,6 @@ namespace ScriptingDemos
             }
         }
 
-
         private static void RunSimple()
         {
             var code = File.ReadAllText(GetScriptTestFile("test1.csx"));
@@ -56,8 +55,6 @@ namespace ScriptingDemos
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
             var scriptState = CSharpScript.RunAsync(code, ScriptOptions.Default.AddImports("System")).Result;
             //result is now 5
-
-            Console.Write(scriptState.ReturnValue);
         }
 
         private static void RunRepl()

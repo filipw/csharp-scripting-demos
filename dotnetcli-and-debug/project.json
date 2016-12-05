@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "Newtonsoft.Json": "9.0.1"
+  },
+  "buildOptions": {
+    "compile": "**/*.csx"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+    }
+  },
+  "tools": {
+    "Dotnet.Script": {
+      "version": "0.7.0-beta",
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ]
+    },
+    "Microsoft.DotNet.Watcher.Tools": {
+      "version": "1.0.0-preview2-final"
+    }
+  }
+}

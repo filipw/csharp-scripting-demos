@@ -14,6 +14,7 @@ using static Fake.NuGetHelper;
 using static Fake.FileHelper;
 
 var projectFolder = "../ScriptingDemos";
+var outputPath = "../artifacts";
 
 Target("Default", FromAction(() => {
   Console.WriteLine("Woohoo, nothing to do!");
@@ -34,7 +35,6 @@ Target("Build", FromAction(() => {
 }));
 
 Target("Pack", FromAction(() => {
-  var outputPath = "../artifacts";
   if (!Directory.Exists(outputPath)) {
     Directory.CreateDirectory(outputPath);
   }

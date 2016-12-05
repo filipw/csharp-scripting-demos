@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Script Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "C:\\Program Files\\dotnet\\dotnet.exe",
+            "args": ["exec", "--additionalprobingpath", "C:\\Users\\filip\\.nuget\\packages", "--depsfile", "C:\\Users\\filip\\.nuget\\packages\\.tools\\Dotnet.Script\\0.7.0-beta\\netcoreapp1.0\\Dotnet.Script.deps.json", "C:\\Users\\filip\\.nuget\\packages\\Dotnet.Script\\0.7.0-beta\\lib\\netcoreapp1.0\\dotnet-script.dll", "${workspaceRoot}\\foo.csx","-d"],
+            "cwd": "${workspaceRoot}",
+            "externalConsole": false,
+            "stopAtEntry": true,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command.pickProcess}"
+        }
+    ]
+}

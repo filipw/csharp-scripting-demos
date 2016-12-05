@@ -29,16 +29,9 @@ namespace ScriptingDemos
                 AddImports("System", "System.IO", "System.Linq", "System.Collections.Generic", typeof(TConfig).Namespace).
                 AddReferences(typeof(object).Assembly, typeof(Enumerable).Assembly, typeof(TConfig).Assembly);
 
-            var script = await CSharpScript.RunAsync(code, opts, typeof(TConfig));
+            var script = await CSharpScript.RunAsync(code, opts, config);
             return config;
         }
-    }
-
-    public class AppConfiguration
-    {
-        public int Number { get; set; }
-
-        public string Text { get; set; }
     }
 
     public enum DataTarget
