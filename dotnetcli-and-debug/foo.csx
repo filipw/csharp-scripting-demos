@@ -1,6 +1,4 @@
 using Newtonsoft.Json;
-using System.IO;
-using System.Linq;
 
 var startWith = Args.FirstOrDefault() ?? "";
 
