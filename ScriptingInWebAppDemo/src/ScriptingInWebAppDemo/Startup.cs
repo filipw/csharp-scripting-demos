@@ -13,7 +13,6 @@ namespace ScriptingInWebAppDemo
 {
     public class Startup
     {
-        private IApplicationBuilder _app;
         public static List<Func<HttpContext, Func<Task>, Task>> DynamicMiddleware = new List<Func<HttpContext, Func<Task>, Task>>();
 
         public Startup(IHostingEnvironment env)
