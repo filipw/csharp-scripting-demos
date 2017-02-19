@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26127.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2EAA95E2-6FF5-4C0D-9BB4-788CADD88F19}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64316732-7264-419A-908B-255239BD3D5A}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ScriptingInWebAppDemo", "src\ScriptingInWebAppDemo\ScriptingInWebAppDemo.xproj", "{D3B5A1FA-9410-4E39-BB5C-FB7998186B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptingInWebAppDemo", "src\ScriptingInWebAppDemo\ScriptingInWebAppDemo.csproj", "{D3B5A1FA-9410-4E39-BB5C-FB7998186B90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
