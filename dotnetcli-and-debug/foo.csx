@@ -1,3 +1,5 @@
+#load "user.csx"
+
 using Newtonsoft.Json;
 
 var startWith = Args.FirstOrDefault() ?? "";
@@ -17,9 +19,4 @@ var filteredUsers = users.Where(x => x.Name.StartsWith(startWith));
 
 foreach(var user in filteredUsers) {
   Console.WriteLine($"Found: {user.Name} - {user.Email}.");
-}
-
-class User {
-  public string Name { get; set; }
-  public string Email { get; set; }
 }
