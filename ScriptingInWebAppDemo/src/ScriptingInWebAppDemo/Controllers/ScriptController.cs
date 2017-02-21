@@ -74,3 +74,17 @@ namespace ScriptingInWebAppDemo.Controllers
         }
     }
 }
+
+
+            /*
+NewEndpoint(async (c, next) => {
+                if (c.Request.Path.ToString().Contains("foo"))
+                {
+                    await c.Response.WriteAsync("bar!");
+                    return;
+                }
+
+                await next();
+            });
+
+             */

@@ -1,7 +1,6 @@
 #r "bin/FakeLib.dll"
 #r "bin/FSharp.Core.dll"
 #r "bin/FSharpx.Extras.dll"
-#r "bin/System.Runtime.dll"
 
 using Fake;
 using FSharpx;

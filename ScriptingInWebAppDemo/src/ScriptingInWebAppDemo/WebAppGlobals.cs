@@ -12,20 +12,6 @@ namespace ScriptingInWebAppDemo
         public void NewEndpoint(Func<HttpContext, Func<Task>, Task> endpoint)
         {
             Startup.DynamicMiddleware.Add(endpoint);
-
-            /*
-NewEndpoint(async (c, next) => {
-                if (c.Request.Path.ToString().Contains("foo"))
-                {
-                    await c.Response.WriteAsync("bar!");
-                }
-                else
-                {
-                    await next();
-                }
-            });
-
-             */
         }
 
         public WebAppGlobals(TextWriter outputWriter, ObjectFormatter objectFormatter) : base(outputWriter, objectFormatter)

@@ -53,7 +53,8 @@ namespace ScriptingDemos
             var code = File.ReadAllText(GetScriptTestFile("test1.csx"));
 
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
-            var scriptState = CSharpScript.RunAsync(code, ScriptOptions.Default.AddImports("System")).Result;
+            var scriptState = CSharpScript.RunAsync(code, 
+                ScriptOptions.Default.AddImports("System")).Result;
             //result is now 5
         }
 
@@ -75,7 +76,7 @@ namespace ScriptingDemos
             var code = File.ReadAllText(GetScriptTestFile("test2.csx"));
 
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
-            var result = CSharpScript.EvaluateAsync<int>(code, null, new ScriptHost { Number = 5 }).Result;
+            var result = CSharpScript.EvaluateAsync<int>(code, ScriptOptions.Default, new ScriptHost { Number = 5 }).Result;
             //result is now 25
             Console.WriteLine(result);
         }

@@ -42,9 +42,13 @@ namespace ScriptingInWebAppDemo
 
             app.Use(async (c, next) =>
             {
-                foreach (var m in DynamicMiddleware)
+                if (DynamicMiddleware.Count > 0) 
                 {
-                    await m(c, next);
+                    foreach (var m in DynamicMiddleware)
+                    {
+                        await m(c, next);
+                    }
+                    return;
                 }
 
                 await next();
