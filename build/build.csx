@@ -9,14 +9,11 @@ using System.Linq;
 using System.IO;
 using static FSharpx.FSharpFunc;
 using static Fake.TargetHelper;
-using static Fake.MSBuildHelper;
-using static Fake.NuGetHelper;
-using static Fake.RestorePackageHelper;
 using static Fake.FileHelper;
+using static Fake.DotNetCli;
 
-var projectFolder = "../ScriptingDemos";
+var projectFolder = "../NetCore/ScriptingDemos";
 var outputPath = "../artifacts";
-var nugetPath = "../tools/nuget.exe";
 
 Target("Default", FromAction(() => {
   Console.WriteLine("Woohoo, nothing to do!");
@@ -27,36 +24,31 @@ Target("Clean", FromAction(() => {
 }));
 
 Target("Restore", FromAction(() => {
-  RestorePackage(Fun<RestorePackageParams>(restore => {
-    restore.ToolPath = nugetPath;
-    restore.OutputPath = "../packages";
-    return restore;
-    }), $"{projectFolder}/packages.config");
+  Restore(Fun<RestoreParams>(r => {
+    r.WorkingDir = projectFolder;
+    return r;
+  }));
 }));
 
 Target("Build", FromAction(() => {
-  MSBuildLoggers = new string[0].ToFSharpList();
-  
-  build(Fun<MSBuildParams>(msBuild => {
-    msBuild.Verbosity = MSBuildVerbosity.Detailed.ToFSharpOption();
-    msBuild.NoLogo = true;
-    msBuild.RestorePackagesFlag = true;
-    return msBuild;
-  }), $"{projectFolder}/ScriptingDemos.csproj");
+  Build(Fun<BuildParams>(b => {
+    b.Configuration = "Release";
+    b.WorkingDir = projectFolder;
+    return b;
+  }));
 }));
 
 Target("Pack", FromAction(() => {
   if (!Directory.Exists(outputPath)) {
     Directory.CreateDirectory(outputPath);
   }
-  NuGetPack(Fun<NuGetParams>(nuget => {
-    nuget.Version = "0.1.0-rc";
-    nuget.ToolPath = nugetPath;
-    nuget.IncludeReferencedProjects = true;
-    nuget.WorkingDir = outputPath;
-    nuget.OutputPath = outputPath;
-    return nuget;
-  }), $"{projectFolder}/ScriptingDemos.csproj");
+  Pack(Fun<PackParams>(p => {
+    p.WorkingDir = projectFolder;
+    p.Configuration = "Release";
+    p.OutputPath = Path.Combine("..", outputPath);
+    p.VersionSuffix = "beta";
+    return p;
+  }));
 }));
 
 dependency("Build", "Clean");
