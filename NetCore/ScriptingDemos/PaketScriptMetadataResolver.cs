@@ -15,7 +15,7 @@ namespace ScriptingDemos
 {
     public class PaketScriptMetadataResolver : MetadataReferenceResolver
     {
-        private StringBuilder PaketDependencies = new StringBuilder().AppendLine("source https://nuget.org/api/v2");
+        private StringBuilder PaketDependencies = new StringBuilder().AppendLine("source https://api.nuget.org/v3/index.json");
         private static string Tfm = "netstandard16";
         private static string PaketPrefix = "paket: ";
         private readonly ScriptMetadataResolver _inner;
@@ -27,7 +27,7 @@ namespace ScriptingDemos
             return scriptOptions.
                 WithMetadataResolver(this).
                 WithReferences(ResolvedReferences.Select(x => MetadataReference.CreateFromFile(x))).
-                AddReferences(ResolvedAssemblies).AddReferences(typeof(DataContractAttribute).GetTypeInfo().Assembly);
+                AddReferences(ResolvedAssemblies);
         }
 
         public PaketScriptMetadataResolver(string code, string workingDirectory = null)
