@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis;
 
 namespace ScriptingDemos
 {
+
     class Program
     {
         static void Main(string[] args)
@@ -53,8 +54,15 @@ namespace ScriptingDemos
             var code = File.ReadAllText(GetScriptTestFile("test1.csx"));
 
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
-            var scriptState = CSharpScript.RunAsync(code, 
-                ScriptOptions.Default.AddImports("System")).Result;
+
+            var resolver = new PaketScriptMetadataResolver(code);
+            var opts = resolver.CreateScriptOptions(ScriptOptions.Default.
+                WithSourceResolver(new PaketSourceFileResolver()));
+
+            var scriptState = CSharpScript.Create(code, opts);
+            scriptState.Compile();
+            var d = scriptState.GetCompilation().GetDiagnostics();
+            var x = scriptState.RunAsync().Result;
             //result is now 5
         }
 
@@ -76,7 +84,8 @@ namespace ScriptingDemos
             var code = File.ReadAllText(GetScriptTestFile("test2.csx"));
 
             //note: we block here, because we are in Main method, normally we could await as scripting APIs are async
-            var result = CSharpScript.EvaluateAsync<int>(code, ScriptOptions.Default, new ScriptHost { Number = 5 }).Result;
+            var result = CSharpScript.EvaluateAsync<int>(code, ScriptOptions.Default, 
+                new ScriptHost { Number = 5 }).Result;
             //result is now 25
             Console.WriteLine(result);
         }

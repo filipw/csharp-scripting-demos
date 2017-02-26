@@ -1,8 +1,12 @@
-﻿using System;
+﻿#r "paket: Newtonsoft.Json"
 
-int Add(int x, int y)
+using System;
+using Newtonsoft.Json;
+
+class Foo
 {
-    return x + y;
+    public string Bar { get; set; }
 }
 
-Console.WriteLine(Add(1, 4));
+Console.WriteLine(JsonConvert.SerializeObject(new Foo { Bar = "hi" }));
+

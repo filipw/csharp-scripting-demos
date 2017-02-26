@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="microsoft.codeanalysis.csharp.scripting" Version="2.0.0-rc4" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Fixtures\config.csx">
@@ -19,4 +20,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <Import Project=".paket\Paket.Restore.targets" />
 </Project>
