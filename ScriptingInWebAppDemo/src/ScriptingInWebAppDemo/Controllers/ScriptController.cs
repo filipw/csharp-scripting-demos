@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting.Hosting;
 using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.DotNet.InternalAbstractions;
 using Microsoft.Extensions.DependencyModel;
 
 namespace ScriptingInWebAppDemo.Controllers
@@ -19,14 +18,14 @@ namespace ScriptingInWebAppDemo.Controllers
 
         public ScriptController()
         {
-            var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
+            //var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
             _opts = ScriptOptions.Default.AddReferences(
                     typeof(ScriptController).GetTypeInfo().Assembly,
                     typeof(object).GetTypeInfo().Assembly,
                     typeof(HttpResponseWritingExtensions).GetTypeInfo().Assembly).
                 AddImports("ScriptingInWebAppDemo", "Microsoft.AspNetCore.Http");
 
-            var inheritedAssemblyNames = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId).Where(x =>
+            /*var inheritedAssemblyNames = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId).Where(x =>
                 x.FullName.ToLowerInvariant().StartsWith("system.runtime") ||
                 x.FullName.ToLowerInvariant().StartsWith("microsoft.codeanalysis"));
 
@@ -34,7 +33,7 @@ namespace ScriptingInWebAppDemo.Controllers
             {
                 var assembly = Assembly.Load(inheritedAssemblyName);
                 _opts = _opts.AddReferences(assembly);
-            }
+            }*/
         }
 
         [HttpPost("")]
